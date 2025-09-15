@@ -1,0 +1,27 @@
+---
+import { social_network_items } from "@/constants/social-network.constants";
+---
+
+<ul class="flex justify-start items-center mt-4">
+  {
+    social_network_items.map((item) => {
+      const { height, width, src: Logo } = item.logo;
+      const classLogo = `h-[${height}px] w-[${width}px]`;
+      console.log({classLogo})
+      return (
+        <li class="mx-2">
+          <a
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-primary/80 hover:text-primary/90 duration-300"
+            aria-label={item.title}
+          >
+            <span class="sr-only">{item.title}</span>
+            <Logo style={{ height: `${height}px`, width: `${width}px` }} />
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>

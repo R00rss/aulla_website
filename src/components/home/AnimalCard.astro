@@ -1,0 +1,27 @@
+---
+type Props = {
+  title: string;
+  description: string;
+  date: string;
+  image: string;
+};
+
+const { date, description, image, title } = Astro.props;
+---
+
+<div class="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto">
+  <div class="flex items-center mb-4">
+    <div class="w-16 h-16 mr-4 flex-shrink-0">
+      <img
+        src={image}
+        alt={title}
+        class="w-full h-full object-cover rounded-full"
+      />
+    </div>
+    <div>
+      <h2 class="text-xl font-semibold text-gray-800">{title}</h2>
+      <p class="text-sm text-gray-500">{date}</p>
+    </div>
+  </div>
+  <p class="text-gray-600">{description}</p>
+</div>

@@ -1,0 +1,136 @@
+---
+import SocialNetwork from "./SocialNetwork.astro";
+import BrandIconMobile from "./BrandIconMobile.astro";
+import NavigationItemsMobile from "./NavigationItemsMobile.astro";
+import HamburgerButton from "./HamburgerButton.astro";
+---
+
+<section class="flex justify-start items-center md:hidden">
+  <HamburgerButton />
+  <nav class="menu-mobile-wrapper">
+    <section class="menu-mobile-content md:p-8 p-6">
+      <BrandIconMobile class="w-max ml-5" />
+      <NavigationItemsMobile />
+      <SocialNetwork />
+    </section>
+  </nav>
+</section>
+
+<style>
+  .menu-mobile-wrapper.active {
+    translate: 0 0;
+  }
+
+  .menu-mobile-wrapper {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    transition: all 0.75s;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.68);
+    z-index: 20;
+    translate: -100% 0%;
+
+    /* translate: 0 0; */
+  }
+
+  .menu-mobile-wrapper.active .menu-mobile-content {
+    translate: 0 0;
+  }
+  .menu-mobile-content {
+    translate: -100% 0%;
+    width: 90%;
+    height: 100%;
+    max-width: 650px;
+    overflow: hidden;
+    transition: all 0.75s;
+    transition-delay: 0.2s;
+    background-color: var(--color-light);
+
+    /* translate: 0 0; */
+  }
+</style>
+
+<script>
+  const button = document.querySelector("#hamburger-menu");
+  const wrapper = document.querySelector(".menu-mobile-wrapper");
+
+  function main() {
+    if (!button || !wrapper) return;
+
+    // Función para cerrar el menú
+    const closeMenu = () => {
+      wrapper.classList.remove("active");
+    };
+
+    // Función para abrir/cerrar el menú
+    const toggleMenu = () => {
+      wrapper.classList.toggle("active");
+    };
+
+    // Manejador unificado para eventos de click y touch
+    const handleInteraction = (e: Event) => {
+      e.preventDefault(); // Evita el doble evento
+      toggleMenu();
+    };
+
+    // Eventos para el botón hamburguesa
+    button.addEventListener("click", handleInteraction);
+    button.addEventListener("touchstart", handleInteraction, { passive: false });
+
+    // Función para manejar el cierre del menú al tocar fuera
+    const handleWrapperInteraction = (e: Event) => {
+      if (e.target === wrapper) {
+        e.preventDefault();
+        closeMenu();
+      }
+    };
+
+    // Eventos para cerrar al tocar fuera del menú
+    wrapper.addEventListener("click", handleWrapperInteraction);
+    wrapper.addEventListener("touchstart", handleWrapperInteraction, { passive: false });
+
+    // Opcional: Cerrar el menú al hacer swipe hacia la izquierda
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    wrapper.addEventListener(
+      "touchstart",
+      (e: Event) => {
+        if (e.target === wrapper && e instanceof TouchEvent) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }
+      },
+      { passive: true }
+    );
+
+    wrapper.addEventListener(
+      "touchend",
+      (e: Event) => {
+        if (e.target === wrapper && e instanceof TouchEvent) {
+          const touchEndX = e.changedTouches[0].clientX;
+          const touchEndY = e.changedTouches[0].clientY;
+          const deltaX = touchStartX - touchEndX;
+          const deltaY = Math.abs(touchStartY - touchEndY);
+
+          // Si es un swipe horizontal hacia la izquierda (mayor a 50px) y no muy vertical
+          if (deltaX > 50 && deltaY < 100) {
+            closeMenu();
+          }
+        }
+      },
+      { passive: true }
+    );
+
+    // Cerrar menú con tecla Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && wrapper.classList.contains("active")) {
+        closeMenu();
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", main);
+</script>

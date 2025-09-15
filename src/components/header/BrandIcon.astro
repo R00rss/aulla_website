@@ -1,0 +1,30 @@
+---
+import AullaLogoSmall from "@/assets/logos/aulla-logo.png";
+---
+
+<a href="/" class="block pt-3 group">
+    <p class="font-comic relative block">
+    <span class="block text-sm leading-4 ml-4">Aulla</span>
+    <span class="block text-3xl leading-5">Ecuador</span>
+    <picture>
+      <source srcset={AullaLogoSmall.src} />
+      <img
+      class="w-[33px] object-contain h-auto absolute -top-3 right-8 duration-300 group-hover:rotate-6"
+        loading="eager"
+        decoding="async"
+        id=""
+        src={AullaLogoSmall.src}
+        alt="Aulla logo Ecuador"
+      />
+    </picture>
+  </p>
+</a>
+
+<style>
+  a {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

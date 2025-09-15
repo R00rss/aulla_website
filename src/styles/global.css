@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --color-light: #F9F9F9;
+  --color-gray: #d2d2d2;
+  --color-dark: #0f1110;
+
+  --color-primary: #61381B;
+  --color-secondary: #F7EDDA;
+  --color-tertiary: #361d0b;
+
+  /* breakpoints */
+  --breakpoint-xs: 30rem; /* 480px */
+  --breakpoint-2xl: 96rem; /* 1536px */
+  --breakpoint-3xl: 120rem; /* 1920px */
+
+  /* fonts */
+  --font-sans: "Quicksand Variable", sans-serif;
+  --font-comic: "Grandstander Variable", sans-serif;
+
+  /* container */
+  --container-8xl: 96rem; /* 96rem = 1536px */
+  --container-9xl: 120rem; /* 120rem = 1920px */
+  --container-10xl: 140rem; /* 140rem = 2560px */
+}

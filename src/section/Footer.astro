@@ -1,0 +1,23 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="separator"></div>
+  <main
+    class="flex flex-col-reverse md:flex-row text-sm gap-4 justify-center items-center pb-14"
+  >
+    <p class="mt-10 md:mt-0">&copy; {year} Aulla Ecuador.</p>
+    <p>Política de privacidad</p>
+    <p>Términos y condiciones</p>
+  </main>
+</footer>
+
+<style>
+  .separator {
+    height: 1px;
+    width: 90%;
+    background-color: #ccc;
+    margin: 20px auto;
+  }
+</style>

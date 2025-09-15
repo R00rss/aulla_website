@@ -1,0 +1,50 @@
+---
+import { support_items as items } from "@/constants/header.constants";
+import SubItems from "./SubItems.astro";
+import PawPrint from "@/assets/icons/paw-print.svg";
+import { cn } from "@/utils/className";
+---
+
+<ul class="flex justify-end items-center gap-2 pl-2 sm:pl-0">
+  {
+    items.map((item, index) => {
+      const isType1 = index === 0;
+
+      const linkClass = cn(
+        "flex gap-2 justify-center items-center rounded-full px-5 py-2",
+        isType1 ? "bg-secondary" : "bg-primary"
+      );
+
+      const labelClass = cn(
+        "font-semibold duration-300 text-sm",
+        isType1
+          ? "text-primary group-hover:text-primary/60"
+          : "text-secondary group-hover:text-secondary/60"
+      );
+
+      const logoClass = cn(
+        "w-5 h-5 group-hover:scale-105 group-hover:rotate-12 duration-300",
+        isType1
+          ? "fill-primary group-hover:fill-primary/60 "
+          : "fill-secondary group-hover:fill-secondary/60 "
+      );
+
+      return (
+        <li class="group relative py-2 first:hidden md:first:block block">
+          <a class={linkClass} href={item.url}>
+            <span class={labelClass}>{item.title}</span>
+            <PawPrint class={logoClass} />
+          </a>
+          {item.subItems && <SubItems items={item.subItems} />}
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  nav {
+    display: flex;
+    gap: 2rem;
+  }
+</style>

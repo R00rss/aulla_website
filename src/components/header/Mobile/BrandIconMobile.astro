@@ -1,0 +1,14 @@
+---
+import BrandIcon from "../BrandIcon.astro";
+
+type Props = {
+  class?: string;
+};
+const { class: className = "" } = Astro.props;
+---
+
+<section class={className}>
+  <section class="scale-125">
+    <BrandIcon />
+  </section>
+</section>

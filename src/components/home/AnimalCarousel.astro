@@ -1,0 +1,36 @@
+---
+import Carousel from "../common/Carousel.astro";
+import AnimalCard from "./AnimalCard.astro";
+
+import Perrito from "@/assets/images/perrito.webp";
+---
+
+<Carousel
+  showNavigationButtons={true}
+  autoPlay={true}
+  autoPlayInterval={4000}
+  showDots={true}
+  infinite={true}
+  itemsPerView={3}
+  gap="1rem"
+  className="my-carousel"
+>
+  <AnimalCard
+    title="Max"
+    description="Max es un perro juguetón y amigable que busca un hogar lleno de amor."
+    date="Disponible desde: 2023-10-01"
+    image={Perrito.src}
+  />
+  <AnimalCard
+    title="Max"
+    description="Max es un perro juguetón y amigable que busca un hogar lleno de amor."
+    date="Disponible desde: 2023-10-01"
+    image={Perrito.src}
+  />
+  <AnimalCard
+    title="Max"
+    description="Max es un perro juguetón y amigable que busca un hogar lleno de amor."
+    date="Disponible desde: 2023-10-01"
+    image={Perrito.src}
+  />
+</Carousel>

@@ -1,0 +1,53 @@
+<button id="hamburger-menu">
+  <div class="hamburger-line hamburger-line-1"></div>
+  <div class="hamburger-line hamburger-line-2"></div>
+  <div class="hamburger-line hamburger-line-3"></div>
+</button>
+
+
+<style>
+  #hamburger-menu {
+    height: 20px;
+    width: 35px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .hamburger-line {
+    position: absolute;
+    width: 25px;
+    height: 3px;
+    background-color: var(--color-primary);
+    border-radius: 40px;
+    transition: all 0.4s;
+    left: 50%;
+    transform: translateX(-50%);
+    transform-origin: center;
+  }
+
+  .hamburger-line-1 {
+    top: 0;
+  }
+
+  .hamburger-line-2 {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .hamburger-line-3 {
+    bottom: 0;
+  }
+
+  #hamburger-menu.active .hamburger-line-1 {
+    transform: translate(-50%, 9px) rotate(45deg);
+  }
+
+  #hamburger-menu.active .hamburger-line-2 {
+    opacity: 0;
+  }
+
+  #hamburger-menu.active .hamburger-line-3 {
+    transform: translate(-50%, -9px) rotate(-45deg);
+  }
+  
+</style>

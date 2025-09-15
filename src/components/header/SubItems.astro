@@ -1,0 +1,26 @@
+---
+import type { NavItem } from '@/types/navbar.type';
+
+
+type Props = {
+  items: NavItem[];
+};
+const { items } = Astro.props;
+---
+
+<ul
+  class="absolute top-full left-0 w-max bg-white rounded-md shadow-lg hidden group-hover:block duration-300 z-10"
+>
+  {
+    items.map((subItem) => (
+      <li>
+        <a
+          class="block px-4 py-2 text-sm text-dark hover:bg-primary/20 rounded-md duration-75"
+          href={subItem.url}
+        >
+          {subItem.title}
+        </a>
+      </li>
+    ))
+  }
+</ul>

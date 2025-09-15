@@ -1,0 +1,24 @@
+---
+import { navigation_items as items } from "@/constants/header.constants";
+import SubItems from "./SubItems.astro";
+import PawPrint from "@/assets/icons/paw-print.svg";
+---
+
+<ul class="justify-start items-center gap-2 hidden md:flex">
+  {
+    items.map((item) => (
+      <li class="group relative">
+        <a
+          class="flex gap-2 justify-center items-center py-2 px-2 lg:px-4"
+          href={item.url}
+        >
+          <span class="font-semibold text-sm text-primary group-hover:text-primary/60 duration-300">
+            {item.title}
+          </span>
+          <PawPrint class="w-5 h-5 fill-primary group-hover:fill-primary/60 group-hover:scale-105 group-hover:rotate-12 duration-300" />
+        </a>
+        {item.subItems && <SubItems items={item.subItems} />}
+      </li>
+    ))
+  }
+</ul>
