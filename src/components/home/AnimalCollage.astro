@@ -1,13 +1,13 @@
 ---
 import AnimalCard from "./AnimalCard.astro";
-
 import { animals } from "@/constants/animals.constant";
 ---
 
-<section class="wrapper-animal-collage relative">
-  <section class="overflow-hidden mt-10 content-animal-collage relative">
+<section class="wrapper-animal-collage relative overflow-hidden">
+  <section class="mt-16 py-6 content-animal-collage relative">
     <section
-      class="flex px-7 sm:px-0 justify-start 3xl:justify-center items-center gap-10"
+      class="flex px-7 sm:px-0 justify-start 3xl:justify-center items-center gap-2 sm:gap-10 animal-cards-container"
+      id="animalCardsContainer"
     >
       {
         animals.map((animal, index) => (
@@ -16,6 +16,8 @@ import { animals } from "@/constants/animals.constant";
             description="Max es un perro juguetón y amigable que busca un hogar lleno de amor."
             date="Disponible desde: 2023-10-01"
             rotateLeft={index % 2 === 0}
+            classNameContainerImage="w-[220px] sm:w-[285px]"
+            className="animal-card pointer-events-none"
             image={animal.image}
           />
         ))
@@ -31,7 +33,7 @@ import { animals } from "@/constants/animals.constant";
     top: 0;
     left: 0;
     width: 100%;
-    height: 90%;
+    height: 88%;
     background: linear-gradient(
       90deg,
       #ffffff 0%,
@@ -52,47 +54,165 @@ import { animals } from "@/constants/animals.constant";
     height: 10%;
     background-color: var(--color-primary);
   }
+
+  .animal-cards-container {
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+
+  .animal-cards-container:active {
+    cursor: grabbing;
+  }
+
+  .animal-cards-container.dragging {
+    cursor: grabbing;
+  }
 </style>
 
 <script>
   import { gsap } from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
-  gsap.registerPlugin(ScrollTrigger);
+  import { Draggable } from "gsap/Draggable";
+
+  gsap.registerPlugin(ScrollTrigger, Draggable);
 
   const contentAnimalCollage = document.querySelector<HTMLElement>(
     ".content-animal-collage"
   );
 
+  const animalsCards = document.querySelectorAll<HTMLElement>(".animal-card");
+
+  const cardsContainer = document.querySelector<HTMLElement>(
+    "#animalCardsContainer"
+  );
+  const firstCard = document.querySelector<HTMLElement>(".animal-card");
+  const lastCard = document.querySelector<HTMLElement>(
+    ".animal-card:last-child"
+  );
+
+  let isDragging = false;
+  let initMouseX = 0;
+
+  function initDraggable() {
+    if (!contentAnimalCollage) return;
+
+    contentAnimalCollage.addEventListener("mousedown", handleStart);
+    document.addEventListener("mousemove", handleMove);
+    document.addEventListener("mouseup", handleEnd);
+
+    contentAnimalCollage.addEventListener("touchstart", handleStart, {
+      passive: false,
+    });
+
+    document.addEventListener("touchmove", handleMove, { passive: false });
+    document.addEventListener("touchend", handleEnd);
+  }
+
+  function handleStart(e: MouseEvent | TouchEvent) {
+    isDragging = true;
+    cardsContainer?.classList.add("dragging");
+
+    initMouseX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
+    // Pausar animaciones de rotación durante el drag
+    gsap.globalTimeline.pause();
+  }
+
+  function handleMove(e: MouseEvent | TouchEvent) {
+    if (!isDragging || !cardsContainer || !firstCard || !lastCard) return;
+    e.preventDefault();
+
+    const endMouseX =
+      e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
+
+    const deltaX = (endMouseX - initMouseX) * 1.5;
+
+    const initX = firstCard.getBoundingClientRect().left;
+    const finalX = initX + deltaX;
+
+    const finalXNormalized = finalX;
+
+    gsap.to(cardsContainer, {
+      x: finalXNormalized,
+      ease: "power2.out",
+    });
+  }
+
+  function handleEnd() {
+    if (!isDragging) return;
+
+    console.log("Drag ended");
+
+    isDragging = false;
+    cardsContainer?.classList.remove("dragging");
+    gsap.globalTimeline.resume();
+
+    setTimeout(() => validateCollageOffset(), 300);
+  }
+
+  function validateCollageOffset() {
+    if (!cardsContainer || !firstCard || !lastCard) return;
+    const MAX_OFFSET = 75;
+    const screenWidth = window.innerWidth;
+    const maxOffSetRight = screenWidth - MAX_OFFSET;
+    const lastX = lastCard.getBoundingClientRect().right;
+    const initX = firstCard.getBoundingClientRect().left;
+
+    if (initX > MAX_OFFSET) {
+      const delta = initX - MAX_OFFSET;
+      const newFinal = initX - delta;
+      gsap.to(cardsContainer, {
+        x: newFinal,
+        ease: "power2.out",
+      });
+    }
+
+    if (lastX < maxOffSetRight) {
+      const delta = screenWidth - lastX;
+      const newFinal = initX + delta;
+      gsap.to(cardsContainer, {
+        x: newFinal,
+        ease: "power2.out",
+      });
+    }
+  }
+
   function init() {
-    gsap.fromTo(
-      contentAnimalCollage,
-      { x: 1200 },
-      {
-        opacity: 1,
-        x: 0,
+    gsap.from(contentAnimalCollage, {
+      x: 500,
+      opacity: 0,
+      duration: 2,
+      scrollTrigger: {
+        trigger: contentAnimalCollage,
+        start: "top 80%",
+        toggleActions: "restart reverse restart reverse",
+      },
+    });
+
+    for (let i = 0; i < animalsCards.length; i++) {
+      const card = animalsCards[i];
+      const degrees = i % 2 === 0 ? -2 : 2;
+      gsap.from(card, {
+        rotate: degrees,
+        delay: 1,
+        repeat: -1,
+        yoyo: true,
         duration: 2,
-      }
-    );
+        ease: "power1.inOut",
+      });
+    }
   }
 
   function scroll() {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "#hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: 0.5,
-      },
-      defaults: { ease: "none" },
-    });
-
-    tl.fromTo(contentAnimalCollage, { scale: 1 }, { scale: 1.5, duration: 5 });
-    tl.to(contentAnimalCollage, { opacity: 0 }, "+=0.1");
+    // Tu función scroll aquí si la tienes
   }
 
   function main() {
     init();
-    scroll();
+    initDraggable();
+    // scroll();
   }
 
   document.addEventListener("DOMContentLoaded", main);
