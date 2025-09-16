@@ -6,8 +6,8 @@ import PawPrint from "@/assets/icons/paw-print.svg";
 
 <ul class="justify-start items-center gap-2 hidden md:flex">
   {
-    items.map((item) => (
-      <li class="group relative">
+    items.map((item, index) => (
+      <li data-navigation-item={index} class="group relative">
         <a
           class="flex gap-2 justify-center items-center py-2 px-2 lg:px-4"
           href={item.url}
@@ -22,3 +22,34 @@ import PawPrint from "@/assets/icons/paw-print.svg";
     ))
   }
 </ul>
+
+<script>
+  import { gsap } from "gsap";
+
+  const items = document.querySelectorAll<HTMLElement>(
+    "[data-navigation-item]"
+  );
+
+  function init() {
+    items.forEach((element) => {
+      const delay = Number(element.dataset.navigationItem) * 0.3;
+      gsap.fromTo(
+        element,
+        { opacity: 0, x: -50, y: -50 },
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          duration: 1,
+          delay: delay,
+          ease: "power2.out",
+        }
+      );
+    });
+  }
+  function main() {
+    init();
+  }
+
+  document.addEventListener("DOMContentLoaded", main);
+</script>
