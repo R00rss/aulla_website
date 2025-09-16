@@ -1,0 +1,43 @@
+---
+import SwipeRight from "@/assets/icons/swipe-right.svg";
+---
+
+<SwipeRight class="w-12 h-12 swipe-right" />
+
+<style>
+  .swipe-right {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.7;
+    z-index: 20;
+    pointer-events: none;
+    opacity: 0;
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  const DELAY_S = 2;
+  const DELAY_MS = DELAY_S * 1000;
+  const DURATION_MS = 5000 + DELAY_MS;
+
+  const swiper = document.querySelector<HTMLElement>(".swipe-right");
+
+  const animation = gsap.to(swiper, {
+    opacity: 1,
+    x: -100,
+    duration: 1,
+    delay: DELAY_S,
+    repeat: -1,
+    yoyo: true,
+    ease: "power1.inOut",
+  });
+
+  setTimeout(() => {
+    animation.pause();
+    gsap.set(swiper, { opacity: 0, x: 0 }); 
+    animation.kill();
+  }, DURATION_MS);
+</script>
