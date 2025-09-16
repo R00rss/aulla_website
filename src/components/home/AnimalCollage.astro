@@ -8,7 +8,7 @@ import { animals } from "@/constants/animals.constant";
   <section class="mt-16 py-6 content-animal-collage relative">
     <GestureHintSwipe toRight />
     <section
-      class="flex px-7 sm:px-0 justify-start 3xl:justify-center items-center gap-2 sm:gap-10 animal-cards-container"
+      class="flex justify-start 3xl:justify-center items-center gap-2 sm:gap-10 animal-cards-container"
       id="animalCardsContainer"
     >
       {
@@ -184,7 +184,7 @@ import { animals } from "@/constants/animals.constant";
   function init() {
     gsap.from(contentAnimalCollage, {
       x: 500,
-      opacity: 0,
+      // opacity: 0,
       duration: 2,
       scrollTrigger: {
         trigger: contentAnimalCollage,
