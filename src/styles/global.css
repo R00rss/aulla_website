@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-light: #F9F9F9;
+  --color-light: #FeFeFe;
   --color-gray: #d2d2d2;
-  --color-dark: #0f1110;
+  --color-dark: #090C02;
 
-  --color-primary: #61381B;
-  --color-secondary: #F7EDDA;
-  --color-tertiary: #361d0b;
+  --color-primary: #E36414;
+  --color-secondary: #FFF4EC;
+  --color-tertiary: #f9d740;
+  /* --color-tertiary: #D2FF28; */
 
   /* breakpoints */
   --breakpoint-xs: 30rem; /* 480px */

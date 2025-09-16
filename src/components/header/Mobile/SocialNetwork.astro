@@ -1,8 +1,8 @@
 ---
-import { social_network_items } from "@/constants/social-network.constants";
+import { social_network_items } from "@/constants/social-network.constant";
 ---
 
-<ul class="flex justify-start items-center mt-4">
+<ul class="flex justify-start items-center my-10 w-full gap-1">
   {
     social_network_items.map((item) => {
       const { height, width, src: Logo } = item.logo;

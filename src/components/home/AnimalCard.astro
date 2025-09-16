@@ -1,27 +1,32 @@
 ---
+import { cn } from '@/utils/className';
+
 type Props = {
   title: string;
   description: string;
   date: string;
   image: string;
+  rotateLeft?: boolean;
+  className?: string;
+  classNameContainerImage?: string;
 };
 
-const { date, description, image, title } = Astro.props;
+const { date, description, image, title, rotateLeft } = Astro.props;
+const { className = "" } = Astro.props;
+const { classNameContainerImage = "" } = Astro.props;
 ---
 
-<div class="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto">
-  <div class="flex items-center mb-4">
-    <div class="w-16 h-16 mr-4 flex-shrink-0">
+<section class={className}>
+  <div
+    class={`bg-white shadow-md rounded-xs w-max p-3 mb-2 ${rotateLeft ? "-rotate-2 hover:-rotate-[4deg]" : "rotate-2 hover:rotate-[4deg] mt-1"} duration-300 cursor-pointer`}
+  >
+    <div class={cn("w-[285px] aspect-[1/1.05]", classNameContainerImage)}>
       <img
         src={image}
         alt={title}
-        class="w-full h-full object-cover rounded-full"
+        class="w-full h-full object-cover object-top"
       />
     </div>
-    <div>
-      <h2 class="text-xl font-semibold text-gray-800">{title}</h2>
-      <p class="text-sm text-gray-500">{date}</p>
-    </div>
+    <span class="pl-4 pt-2 block text-gray-600 font-semibold">{title}</span>
   </div>
-  <p class="text-gray-600">{description}</p>
-</div>
+</section>

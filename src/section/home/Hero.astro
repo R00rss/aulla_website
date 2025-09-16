@@ -1,11 +1,14 @@
 ---
-import AnimalCarousel from "@/components/home/AnimalCarousel.astro";
 import HeroTitle from "@/components/home/HeroTitle.astro";
 import SectionLayout from "@/layout/section-layout.astro";
-const heroTitle = "Rescata, adopta, transforma vidas.";
+import AnimalCollage from "@/components/home/AnimalCollage.astro";
+import HeroStatistics from "@/components/home/HeroStatistics.astro";
+
+const heroTitle = "Queremos cambiar la realidad de los perros callejeros en el Ecuador";
 ---
 
-<SectionLayout>
+<SectionLayout id="hero">
   <HeroTitle title={heroTitle} />
-  <AnimalCarousel />
 </SectionLayout>
+<AnimalCollage />
+<HeroStatistics />

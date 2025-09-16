@@ -1,5 +1,5 @@
 ---
-import { navigation_items, support_items } from "@/constants/header.constants";
+import { navigation_items, support_items } from "@/constants/header.constant";
 import PawPrint from "@/assets/icons/paw-print.svg";
 const items = navigation_items.concat(support_items);
 ---
@@ -13,14 +13,14 @@ const items = navigation_items.concat(support_items);
       return (
         <li class="my-4">
           <a class={className} href={item.url}>
-            <span>{item.title}</span>
+            <span class="px-2 font-semibold">{item.title}</span>
             {!hasSubItems && <PawPrint class="w-6 h-6" />}
           </a>
           <ul>
             {subItems.map((subitem) => (
-              <li class="my-1 ml-4">
+              <li class="">
                 <a
-                  class="text-sm text-dark font-medium hover:text-primary w-full max-w-md block px-2 py-1.5 rounded-lg hover:bg-primary/10 duration-300"
+                  class="text-base font-semibold pl-10 text-dark hover:text-primary w-full max-w-md block px-2 py-1.5 rounded-lg hover:bg-primary/10 duration-300"
                   href={subitem.url}
                 >
                   {subitem.title}
@@ -37,10 +37,7 @@ const items = navigation_items.concat(support_items);
 <style>
   .button-style,
   .title-list-style {
-    font-weight: 600;
     color: var(--color-primary);
-    font-size: 0.875rem;
-    line-height: calc(1.25 / 0.875);
   }
 
   .button-style {

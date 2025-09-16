@@ -31,8 +31,8 @@ export const social_network_items: SocialNetWorkItem[] = [
     url: "https://www.youtube.com/@AULLAECUADOR",
     logo: {
       src: YoutubeIcon,
-      height: 32,
-      width: 32,
+      height: 36,
+      width: 36,
     },
   },
   {
