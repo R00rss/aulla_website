@@ -50,7 +50,7 @@ import { animals } from "@/constants/animals.constant";
   .wrapper-animal-collage::before {
     content: "";
     position: absolute;
-    top: 90%;
+    top: 91%;
     left: 0;
     width: 100%;
     height: 10%;
@@ -118,29 +118,28 @@ import { animals } from "@/constants/animals.constant";
     contentAnimalCollage?.classList.add("dragging");
 
     initMouseX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
-    // Pausar animaciones de rotación durante el drag
-    gsap.globalTimeline.pause();
+    // gsap.globalTimeline.pause();
   }
 
   function handleMove(e: MouseEvent | TouchEvent) {
-    if (!isDragging || !cardsContainer || !firstCard || !lastCard) return;
-    e.preventDefault();
+    if (isDragging) {
+      if (!cardsContainer || !firstCard) return;
 
-    const endMouseX =
-      e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
+      const endMouseX =
+        e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
+      const deltaX = (endMouseX - initMouseX) * 0.75;
 
-    const deltaX = (endMouseX - initMouseX) * 1.5;
+      const initX = firstCard.getBoundingClientRect().left;
+      const finalX = initX + deltaX;
 
-    const initX = firstCard.getBoundingClientRect().left;
-    const finalX = initX + deltaX;
-
-    const finalXNormalized = finalX;
-
-    gsap.to(cardsContainer, {
-      x: finalXNormalized,
-      duration: 0.3,
-      ease: "power3.out",
-    });
+      const finalXNormalized = finalX;
+      console.log({ finalXNormalized });
+      gsap.to(cardsContainer, {
+        x: finalXNormalized,
+        // duration: 0.3,
+        ease: "power3.out",
+      });
+    }
   }
 
   function handleEnd() {
@@ -150,7 +149,7 @@ import { animals } from "@/constants/animals.constant";
 
     isDragging = false;
     contentAnimalCollage?.classList.remove("dragging");
-    gsap.globalTimeline.resume();
+    // gsap.globalTimeline.resume();
 
     setTimeout(() => validateCollageOffset(), 300);
   }
