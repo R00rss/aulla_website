@@ -2,7 +2,6 @@
 import Perrito from "@/assets/images/perrito.webp";
 import AnimalCard from "@/components/home/AnimalCard.astro";
 
-
 const title =
   "A través de la esterilización, la alimentación y la atención médica de emergencia, buscamos mejorar la vida de los perros callejeros en todo el mundo.";
 
@@ -34,8 +33,12 @@ const statistics = [
   >
     {title}
   </p>
-  <section class="flex flex-col md:flex-row justify-center items-start pt-14 pb-24 lg:gap-10 overflow-hidden">
-    <div class="relative w-[500px] h-[300px] mb-5 md:mb-0 mt-2 lg:mt-10 mx-auto md:mx-0">
+  <section
+    class="flex flex-col md:flex-row justify-center items-start pt-14 pb-24 lg:gap-10 overflow-hidden"
+  >
+    <div
+      class="relative w-[500px] h-[300px] mb-5 md:mb-0 mt-2 lg:mt-10 mx-auto md:mx-0"
+    >
       <AnimalCard
         title="Max"
         description="Max es un perro juguetón y amigable que busca un hogar lleno de amor."
@@ -54,18 +57,48 @@ const statistics = [
         image={Perrito.src}
       />
     </div>
-    <ul class="flex flex-col sm:justify-center items-center w-full md:w-auto gap-10 px-5">
+    <ul
+      class="flex flex-col sm:justify-center items-center w-full md:w-auto gap-10 px-5"
+    >
       {
         statistics.map((stat) => (
           <li class=" flex flex-col items-start justify-start text-start">
-            <p class="text-4xl font-bold text-light">{stat.value}</p>
-            <p class="text-lg font-medium mt-2 text-tertiary">{stat.label}</p>
-            <p class="text-base text-light max-w-sm">
-              {stat.description}
+            <p class="statistic-value text-4xl font-bold text-light">
+              {stat.value}
             </p>
+            <p class="text-lg font-medium mt-2 text-tertiary">{stat.label}</p>
+            <p class="text-base text-light max-w-sm">{stat.description}</p>
           </li>
         ))
       }
     </ul>
   </section>
 </section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  const values = document.querySelectorAll<HTMLElement>(".statistic-value");
+  console.log({ values });
+  function init() {
+    values.forEach((value) => {
+      gsap.from(value, {
+        y: 50,
+        opacity: 0,
+        duration: 0.5,
+        scrollTrigger: {
+          trigger: value,
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+      });
+    });
+  }
+  function main() {
+    init();
+  }
+
+  document.addEventListener("DOMContentLoaded", main);
+</script>
